@@ -29,39 +29,53 @@ import java.io.RandomAccessFile;
  * @skype kailash.09
  */
 final class Wav extends AbstractRecorder {
-  private final RandomAccessFile wavFile;
+    private RandomAccessFile wavFile;
 
-  public Wav(PullTransport pullTransport, File file) {
-    super(pullTransport,file);
-    this.wavFile = randomAccessFile(file);
-  }
-
-  private RandomAccessFile randomAccessFile(File file) {
-    RandomAccessFile randomAccessFile;
-    try {
-      randomAccessFile = new RandomAccessFile(file, "rw");
-    } catch (FileNotFoundException e) {
-      throw new RuntimeException(e);
+    public Wav(PullTransport pullTransport, File file) {
+        super(pullTransport, file);
     }
-    return randomAccessFile;
-  }
 
-  @Override public void stopRecording() {
-    super.stopRecording();
-    try {
-      writeWavHeader();
-    } catch (IOException e) {
+    private RandomAccessFile randomAccessFile(File file) {
+        RandomAccessFile randomAccessFile;
+        try {
+            randomAccessFile = new RandomAccessFile(file, "rw");
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        return randomAccessFile;
     }
-  }
 
-  private void writeWavHeader() throws IOException {
-    long totalAudioLen = new FileInputStream(file).getChannel().size();
-    try {
-      wavFile.seek(0); // to the beginning
-      wavFile.write(new WavHeader(pullTransport.source(), totalAudioLen).toBytes());
-      wavFile.close();
-    } catch (IOException e) {
-      e.printStackTrace();
+    @Override
+    public void startRecording() {
+        super.startRecording();
     }
-  }
+
+    @Override
+    public void stopRecording() {
+        super.stopRecording();
+
+        try {
+            writeWavHeader();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private void writeWavHeader() throws IOException {
+        // recapture the file
+        wavFile = randomAccessFile(file);
+
+        FileInputStream inputStream = new FileInputStream(file);
+        long totalAudioLen = inputStream.getChannel().size();
+        try {
+            wavFile.seek(0); // to the beginning
+            wavFile.write(new WavHeader(pullTransport.source(), totalAudioLen).toBytes());
+            wavFile.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            IOUtils.close(inputStream);
+        }
+    }
 }

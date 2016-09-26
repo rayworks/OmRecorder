@@ -15,27 +15,32 @@ import android.widget.ListView;
  * Copyright (c) 2016 Kingbull Technology. All rights reserved.
  */
 public class MainActivity extends AppCompatActivity {
-  private final static String DEMO_PCM = "Pcm Recorder";
-  private final static String DEMO_WAV = "Wav Recorder";
-  ListView listView;
-  String[] demoArray = new String[] { "Pcm Recorder", "Wav Recorder" };
+    private final static String DEMO_PCM = "Pcm Recorder";
+    private final static String DEMO_WAV = "Wav Recorder";
+    private final static String DEMO_WAV_RIPPLE = "Wav Recorder Ripple";
+    ListView listView;
+    String[] demoArray = new String[]{"Pcm Recorder", "Wav Recorder", DEMO_WAV_RIPPLE};
 
-  @Override protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_main);
-    listView = (ListView) findViewById(android.R.id.list);
-    listView.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, demoArray));
-    listView.setOnItemClickListener(new OnItemClickListener() {
-      @Override public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        switch (demoArray[i]) {
-          case DEMO_PCM:
-            startActivity(new Intent(MainActivity.this, PcmRecorderActivity.class));
-            break;
-          case DEMO_WAV:
-            startActivity(new Intent(MainActivity.this, WavRecorderActivity.class));
-            break;
-        }
-      }
-    });
-  }
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        listView = (ListView) findViewById(android.R.id.list);
+        listView.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, demoArray));
+        listView.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                switch (demoArray[i]) {
+                    case DEMO_PCM:
+                        startActivity(new Intent(MainActivity.this, PcmRecorderActivity.class));
+                        break;
+                    case DEMO_WAV:
+                        startActivity(new Intent(MainActivity.this, WavRecorderActivity.class));
+                        break;
+                    case DEMO_WAV_RIPPLE:
+                        startActivity(new Intent(MainActivity.this, MicrophoneRecordActivity.class));
+                }
+            }
+        });
+    }
 }

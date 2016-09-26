@@ -45,21 +45,15 @@
             <id>Android Lint</id>
           </State>
           <State>
-            <id>Control flow issuesJava</id>
+            <id>JUnit issues</id>
           </State>
           <State>
-            <id>Java</id>
-          </State>
-          <State>
-            <id>Naming conventionsJava</id>
-          </State>
-          <State>
-            <id>XML</id>
+            <id>TestNG</id>
           </State>
         </expanded-state>
         <selected-state>
           <State>
-            <id>AndroidLintGradleGetter</id>
+            <id>Android</id>
           </State>
         </selected-state>
       </profile-state>
@@ -83,13 +77,24 @@
   </component>
   <component name="masterDetails">
     <states>
+      <state key="Copyright.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
       <state key="ProjectJDKs.UI">
         <settings>
           <last-edited>1.8</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
-                <option value="0.2" />
+                <option value="0.255" />
               </list>
             </option>
           </splitter-proportions>
